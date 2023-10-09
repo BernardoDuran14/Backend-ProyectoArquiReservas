@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -12,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "p_reserve")
-public class Reserve extends AuditableEntity{
+public class Reserve implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,13 +37,13 @@ public class Reserve extends AuditableEntity{
     private Vehicles vehicles;
 
     @Column(name = "p_reserve_def")
-    private Boolean def;
+    private String def;
 
-    @Column(name = "p_reserve_start_date")
-    private String startDate;
+    @Column(name = "p_reserve_status")
+    private Boolean status;
 
-    @Column(name = "p_reserve_end_date")
-    private String endDate;
+    @Column(name = "p_reserve_deleted")
+    private Boolean deleted;
 
     @Column(name = "p_reserve_start_time")
     private Date startTime;

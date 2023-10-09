@@ -5,12 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "p_admin")
-public class Admin extends AuditableEntity{
+public class Admin implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

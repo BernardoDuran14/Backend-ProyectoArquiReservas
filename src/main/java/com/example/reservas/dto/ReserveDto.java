@@ -41,13 +41,4 @@ public class ReserveDto {
     @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_end_date")})
     @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_end_date")})
     private String endDate;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_start_time")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_start_time")})
-    private String startTime;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_end_time")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_end_time")})
-    private String endTime;
-
 }

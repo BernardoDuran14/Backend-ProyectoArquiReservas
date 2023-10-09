@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FloorDto {
 
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_floor_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_floor_id")})
+//    @lombok.Getter(onMethod_ = {@JsonProperty("p_floor_id")})
+//    @lombok.Setter(onMethod_ = {@JsonProperty("p_floor_id")})
     private Long id;
 
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_floor_name")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_floor_name")})
+//    @lombok.Getter(onMethod_ = {@JsonProperty("p_floor_name")})
+//    @lombok.Setter(onMethod_ = {@JsonProperty("p_floor_name")})
     private String name;
 }

@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AdminDto {
 
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_admin_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_admin_id")})
+//    @lombok.Getter(onMethod_ = {@JsonProperty("p_admin_id")})
+//    @lombok.Setter(onMethod_ = {@JsonProperty("p_admin_id")})
     private Long id;
 
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_admin_person_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_admin_person_id")})
+//    @lombok.Getter(onMethod_ = {@JsonProperty("p_admin_person_id")})
+//    @lombok.Setter(onMethod_ = {@JsonProperty("p_admin_person_id")})
     private Long person;
 }
