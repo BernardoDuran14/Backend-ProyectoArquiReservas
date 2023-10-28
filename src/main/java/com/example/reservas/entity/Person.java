@@ -33,6 +33,9 @@ public class Person implements Serializable {
     @Column(name = "p_person_dni")
     private String dni;
 
+    @Column(name = "p_person_deleted")
+    private Boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "p_person_user_id", referencedColumnName = "p_user_id")
     private User user;

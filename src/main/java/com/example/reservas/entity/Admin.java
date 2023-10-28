@@ -19,6 +19,9 @@ public class Admin implements Serializable{
     @Column(name = "p_admin_id")
     private Long id;
 
+    @Column(name = "p_admin_deleted")
+    private Boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "p_admin_person_id", referencedColumnName = "p_person_id")
     private Person person;

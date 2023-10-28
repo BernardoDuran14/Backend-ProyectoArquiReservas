@@ -36,5 +36,5 @@ public class PersonDto {
 
 //    @lombok.Getter(onMethod_ = {@JsonProperty("p_person_user_id")})
 //    @lombok.Setter(onMethod_ = {@JsonProperty("p_person_user_id")})
-    private Long user;
+    private UserDto user;
 }

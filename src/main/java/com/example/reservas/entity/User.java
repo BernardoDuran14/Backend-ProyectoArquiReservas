@@ -23,4 +23,7 @@ public class User implements Serializable {
 
     @Column(name = "p_user_password")
     private String password;
+
+    @Column(name = "p_user_deleted")
+    private Boolean deleted;
 }

@@ -1,16 +1,18 @@
-server:
-  port: 7777
-
-spring:
-  application:
-    name: parqueo-reservas
-
-  datasource:
-    url: jdbc:postgresql://localhost:5432/parqueo
-    username: usertest
-    password: 123456
-  jpa:
-    hibernate:
-      ddl-auto: update
+#server:
+#  port: 7777
+#
+#spring:
+#  application:
+#    name: reserves
+#
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/parqueo
+#    username: usertest
+#    password: 123456
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8714/eureka/
 
 

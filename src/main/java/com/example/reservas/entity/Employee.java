@@ -19,6 +19,9 @@ public class Employee implements Serializable {
     @Column(name = "p_employee_id")
     private Long id;
 
+    @Column(name = "p_employee_deleted")
+    private Boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "p_employee_person_id", referencedColumnName = "p_person_id")
     private Person person;
