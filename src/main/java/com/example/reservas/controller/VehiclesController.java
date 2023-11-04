@@ -4,15 +4,18 @@ import com.example.reservas.dto.VehiclesDto;
 import com.example.reservas.dto.VehiclesDtoSpecial;
 import com.example.reservas.entity.Vehicles;
 import com.example.reservas.service.impl.VehiclesImpl;
+import com.example.reservas.service.inter.KeycloakService;
 import com.example.reservas.service.inter.VehiclesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,9 +25,21 @@ public class VehiclesController {
     @Autowired
     private VehiclesImpl vehiclesService;
 
+    @Autowired
+    private KeycloakService keycloakService;
+
+    @Value("${token.resource-id}")
+    private String keycloakClient;
+
     @GetMapping("/all")
     public ResponseEntity<List<VehiclesDto>> getAllVehicles() {
         try {
+            Map<String, String> data = Map.of(
+                    "grant_type", "client_credentials",
+                    "client_id", keycloakClient,
+                    "client_secret", "ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3");
+            String token = "Bearer " + keycloakService.getToken(data).get("access_token");
+            log.info("Token: {}", token);
             return ResponseEntity.ok(vehiclesService.getAllVehicles());
         } catch (Exception e) {
             log.error("Error al obtener la lista de vehiculos", e);

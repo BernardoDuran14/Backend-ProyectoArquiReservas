@@ -6,14 +6,17 @@ import com.example.reservas.entity.Person;
 import com.example.reservas.entity.Vehicles;
 import com.example.reservas.repository.VehiclesRepository;
 import com.example.reservas.service.inter.CustomerService;
+import com.example.reservas.service.inter.KeycloakService;
 import com.example.reservas.service.inter.VehiclesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -25,6 +28,12 @@ public class VehiclesImpl implements VehiclesService {
 
     @Autowired
     private CustomerService customerService;
+
+    @Autowired
+    private KeycloakService keycloakService;
+
+    @Value("${token.resource-id}")
+    private String keycloakClient;
 
     @Override
     public List<VehiclesDto> getAllVehicles() {
@@ -69,8 +78,14 @@ public class VehiclesImpl implements VehiclesService {
         person1.setPhone(vehicleDto.getCustomer().getPerson().getPhone());
         person1.setUser(vehicleDto.getCustomer().getPerson().getUser());
         customerDto.setPerson(person1);
-        log.info("Person: {}", person1);
-        ResponseEntity<Customer> customerResponseEntity = customerService.save(customerDto);
+
+        Map<String, String> data = Map.of(
+                "grant_type", "client_credentials",
+                "client_id", keycloakClient,
+                "client_secret", "ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3");
+        String token = "Bearer " + keycloakService.getToken(data).get("access_token");
+
+        ResponseEntity<Customer> customerResponseEntity = customerService.save(token, customerDto);
 
         // ahora el vehiculo
         vehicle1.setColor(vehicleDto.getColor());
