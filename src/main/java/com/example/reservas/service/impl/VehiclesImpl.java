@@ -82,7 +82,7 @@ public class VehiclesImpl implements VehiclesService {
         Map<String, String> data = Map.of(
                 "grant_type", "client_credentials",
                 "client_id", keycloakClient,
-                "client_secret", "ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3");
+                "client_secret", "tkEi3OYulP6VqcRhLhPtvlj1BGKFGSiw");
         String token = "Bearer " + keycloakService.getToken(data).get("access_token");
 
         ResponseEntity<Customer> customerResponseEntity = customerService.save(token, customerDto);
