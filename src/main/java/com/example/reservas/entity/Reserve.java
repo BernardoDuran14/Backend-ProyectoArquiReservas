@@ -45,9 +45,15 @@ public class Reserve implements Serializable {
     @Column(name = "p_reserve_deleted")
     private Boolean deleted;
 
+    @Column(name = "p_reserve_start_date")
+    private Date startDate;
+
+    @Column(name = "p_reserve_end_date")
+    private Date endDate;
+
     @Column(name = "p_reserve_start_time")
-    private Date startTime;
+    private int startTime;
 
     @Column(name = "p_reserve_end_time")
-    private Date endTime;
+    private int endTime;
 }

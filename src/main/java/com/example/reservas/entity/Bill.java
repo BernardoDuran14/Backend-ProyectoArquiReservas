@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,12 @@ public class Bill implements Serializable {
     @Column(name = "p_bill_id")
     private Long id;
 
+    @Column(name = "p_bill_nit")
+    private String nit;
+
+    @Column(name = "p_bill_date")
+    private Date date;
+
     @Column(name = "p_bill_total")
     private Double total;
 
@@ -29,4 +36,8 @@ public class Bill implements Serializable {
     @ManyToOne
     @JoinColumn(name = "p_bill_employee_id", referencedColumnName = "p_employee_id")
     private Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "p_bill_reserve_id", referencedColumnName = "p_reserve_id")
+    private Reserve reserve;
 }

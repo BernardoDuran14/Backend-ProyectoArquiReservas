@@ -5,40 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReserveDto {
 
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_id")})
     private Long id;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_customer_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_customer_id")})
-    private Long customer;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_space_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_space_id")})
-    private Long space;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_employee_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_employee_id")})
-    private Long employee;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_vehicles_id")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_vehicles_id")})
-    private Long vehicles;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_def")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_def")})
+    private Long customerId;
+    private Long spaceId;
+    private Long employeeId;
+    private String vehiclePlate;
     private Boolean def;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_start_date")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_start_date")})
-    private String startDate;
-
-    @lombok.Getter(onMethod_ = {@JsonProperty("p_reserve_end_date")})
-    @lombok.Setter(onMethod_ = {@JsonProperty("p_reserve_end_date")})
-    private String endDate;
+    private Boolean status;
+    private Date startDate;
+    private Date endDate;
+    private int startTime;
+    private int endTime;
 }

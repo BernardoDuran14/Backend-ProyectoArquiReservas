@@ -35,6 +35,9 @@ public class VehiclesImpl implements VehiclesService {
     @Value("${token.resource-id}")
     private String keycloakClient;
 
+    @Value("${token.private-key}")
+    private String keycloakPrivateKey;
+
     @Override
     public List<VehiclesDto> getAllVehicles() {
         List<Vehicles> vehicles = vehiclesRepository.findAll();
@@ -52,7 +55,12 @@ public class VehiclesImpl implements VehiclesService {
     @Override
     public Vehicles getVehiclesById(Long id) {
         Vehicles vehicles = vehiclesRepository.findById(id).get();
-        ResponseEntity<Customer> customer = customerService.getCustomerById(vehicles.getCustomer().getId());
+        Map<String, String> data = Map.of(
+                "grant_type", "client_credentials",
+                "client_id", keycloakClient,
+                "client_secret", keycloakPrivateKey);
+        String token = "Bearer " + keycloakService.getToken(data).get("access_token");
+        ResponseEntity<Customer> customer = customerService.getCustomerById(token,vehicles.getCustomer().getId());
         vehicles.setCustomer(customer.getBody());
         return vehicles;
     }
@@ -61,7 +69,12 @@ public class VehiclesImpl implements VehiclesService {
     public void saveVehicles(VehiclesDto vehiclesDto) {
         Vehicles vehicles = new Vehicles();
         BeanUtils.copyProperties(vehiclesDto, vehicles);
-        ResponseEntity<Customer> customer = customerService.getCustomerById(vehiclesDto.getCustomer());
+        Map<String, String> data = Map.of(
+                "grant_type", "client_credentials",
+                "client_id", keycloakClient,
+                "client_secret", keycloakPrivateKey);
+        String token = "Bearer " + keycloakService.getToken(data).get("access_token");
+        ResponseEntity<Customer> customer = customerService.getCustomerById(token,vehiclesDto.getCustomer());
         vehicles.setCustomer(customer.getBody());
         vehiclesRepository.save(vehicles);
     }
@@ -82,7 +95,7 @@ public class VehiclesImpl implements VehiclesService {
         Map<String, String> data = Map.of(
                 "grant_type", "client_credentials",
                 "client_id", keycloakClient,
-                "client_secret", "tkEi3OYulP6VqcRhLhPtvlj1BGKFGSiw");
+                "client_secret", keycloakPrivateKey);
         String token = "Bearer " + keycloakService.getToken(data).get("access_token");
 
         ResponseEntity<Customer> customerResponseEntity = customerService.save(token, customerDto);

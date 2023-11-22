@@ -1,5 +1,7 @@
 package com.example.reservas.controller;
+import com.example.reservas.dto.InitReservaDto;
 import com.example.reservas.dto.SpaceDto;
+import com.example.reservas.entity.Space;
 import com.example.reservas.service.inter.ReserveService;
 import com.example.reservas.service.inter.SpaceService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,9 +20,9 @@ public class ReserveController {
     private ReserveService reserveService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<SpaceDto>> getAllFloors() {
+    public ResponseEntity<List<Space>> getAllFloors(@RequestBody InitReservaDto initReservaDto) {
         try {
-            return ResponseEntity.ok(reserveService.getAllReservesAvailables());
+            return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
         } catch (Exception e) {
             log.error("Error al obtener la lista de pisos", e);
             return ResponseEntity.badRequest().build();

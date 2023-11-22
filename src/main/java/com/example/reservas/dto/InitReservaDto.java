@@ -1,16 +1,18 @@
 package com.example.reservas.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FloorDto {
-
-    private Long id;
-
+public class InitReservaDto {
     private String name;
+    private Date fechaInicio;
+    private Date fechaFin;
+    private int horaInicio;
+    private int horaFin;
 }

@@ -28,6 +28,9 @@ public class Vehicles implements Serializable {
     @Column(name = "p_vehicles_license_plate")
     private String licensePlate;
 
+    @Column(name = "p_vehicles_deleted")
+    private Boolean deleted;
+
     @ManyToOne
     @JoinColumn(name = "p_vehicles_customer_id", referencedColumnName = "p_customer_id")
     private Customer customer;

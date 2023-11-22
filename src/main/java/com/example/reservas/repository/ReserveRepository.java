@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Date;
 import java.util.List;
 
 public interface ReserveRepository extends JpaRepository<Reserve, Long> {
@@ -13,6 +14,21 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
     @Query("SELECT r FROM Reserve r WHERE r.deleted = false and r.status = false and r.space.floor.id = :id")
     public List<Space> listaEspaciosDisponiblesPorPiso(@PathVariable Long id);
 
-    @Query("SELECT r FROM Reserve r WHERE r.deleted = false and r.status = false")
-    public List<Space> listaEspaciosDisponibles();
+    // en el siguiente query, quiero ver los espacios disponibles por piso, pero que no esten reservados en un rango de fechas
+    @Query("SELECT s FROM Reserve r, Space s " + // hacer los joins
+            "WHERE r.deleted = false and r.space.id= s.id " +
+            "and r.status = false and r.space.floor.name = :name " +
+            "and r.startDate >= :fechaInicio and r.endDate <= :fechaFin " +
+            "and r.startTime >= :horaInicio and r.endTime <= :horaFin ")
+    public List<Space> listaEspaciosNoDisponiblesPorPisoYFecha(@PathVariable String name, @PathVariable Date fechaInicio,
+                                                               @PathVariable Date fechaFin, @PathVariable int horaInicio,
+                                                               @PathVariable int horaFin);
+
+    // quiero revisar todas las reservas de un usuario, como un historial
+    @Query("SELECT r FROM Reserve r WHERE r.deleted = false and r.customer.person.dni = :dni")
+    public List<Reserve> listaReservasPorUsuario(@PathVariable Long dni);
+
+    // obtener una reserva por id
+    @Query("SELECT r FROM Reserve r WHERE r.deleted = false and r.id = :id")
+    public Reserve obtenerReservaPorId(@PathVariable Long id);
 }
