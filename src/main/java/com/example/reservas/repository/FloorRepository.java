@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface FloorRepository extends JpaRepository<Floor, Long> {
 
-    @Query("SELECT f FROM Floor f WHERE f.deleted = false")
+    @Query("SELECT f FROM Floor f WHERE f.deleted = false or f.deleted is null")
     public List<Floor> findAllByDeletedFalse();
 }

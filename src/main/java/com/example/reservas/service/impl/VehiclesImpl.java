@@ -53,15 +53,14 @@ public class VehiclesImpl implements VehiclesService {
     }
 
     @Override
-    public Vehicles getVehiclesById(Long id) {
+    public Vehicles getVehicleById(Long id) {
         Vehicles vehicles = vehiclesRepository.findById(id).get();
-        Map<String, String> data = Map.of(
-                "grant_type", "client_credentials",
-                "client_id", keycloakClient,
-                "client_secret", keycloakPrivateKey);
-        String token = "Bearer " + keycloakService.getToken(data).get("access_token");
-        ResponseEntity<Customer> customer = customerService.getCustomerById(token,vehicles.getCustomer().getId());
-        vehicles.setCustomer(customer.getBody());
+        return vehicles;
+    }
+
+    @Override
+    public List<Vehicles> getVehiclesByCustomer(Long id) {
+        List<Vehicles> vehicles = vehiclesRepository.findAllByCustomer(id);
         return vehicles;
     }
 
@@ -91,6 +90,7 @@ public class VehiclesImpl implements VehiclesService {
         person1.setPhone(vehicleDto.getCustomer().getPerson().getPhone());
         person1.setUser(vehicleDto.getCustomer().getPerson().getUser());
         customerDto.setPerson(person1);
+        log.info("Llave keycloak: " + keycloakPrivateKey);
 
         Map<String, String> data = Map.of(
                 "grant_type", "client_credentials",

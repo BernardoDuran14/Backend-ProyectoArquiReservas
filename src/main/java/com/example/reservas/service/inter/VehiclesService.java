@@ -9,7 +9,8 @@ public interface VehiclesService {
 
     public List<VehiclesDto> getAllVehicles();
 
-    public Vehicles getVehiclesById(Long id);
+    public Vehicles getVehicleById(Long id);
+    public List<Vehicles> getVehiclesByCustomer(Long id);
 
     public void saveVehicles(VehiclesDto vehiclesDto);
 

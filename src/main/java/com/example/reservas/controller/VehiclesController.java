@@ -5,7 +5,6 @@ import com.example.reservas.dto.VehiclesDtoSpecial;
 import com.example.reservas.entity.Vehicles;
 import com.example.reservas.service.impl.VehiclesImpl;
 import com.example.reservas.service.inter.KeycloakService;
-import com.example.reservas.service.inter.VehiclesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -34,12 +32,12 @@ public class VehiclesController {
     @GetMapping("/all")
     public ResponseEntity<List<VehiclesDto>> getAllVehicles() {
         try {
-            Map<String, String> data = Map.of(
-                    "grant_type", "client_credentials",
-                    "client_id", keycloakClient,
-                    "client_secret", "ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3");
-            String token = "Bearer " + keycloakService.getToken(data).get("access_token");
-            log.info("Token: {}", token);
+//            Map<String, String> data = Map.of(
+//                    "grant_type", "client_credentials",
+//                    "client_id", keycloakClient,
+//                    "client_secret", "ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3");
+//            String token = "Bearer " + keycloakService.getToken(data).get("access_token");
+//            log.info("Token: {}", token);
             return ResponseEntity.ok(vehiclesService.getAllVehicles());
         } catch (Exception e) {
             log.error("Error al obtener la lista de vehiculos", e);
@@ -48,9 +46,19 @@ public class VehiclesController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Vehicles> getVehiclesById(@PathVariable Long id) {
+    public ResponseEntity<Vehicles> getVehicleById(@PathVariable Long id) {
         try {
-            return ResponseEntity.ok(vehiclesService.getVehiclesById(id));
+            return ResponseEntity.ok(vehiclesService.getVehicleById(id));
+        } catch (Exception e) {
+            log.error("Error al obtener el vehiculo", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("all_by_customer/{id}")
+    public ResponseEntity<List<Vehicles>> getVehiclesByCustomer(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(vehiclesService.getVehiclesByCustomer(id));
         } catch (Exception e) {
             log.error("Error al obtener el vehiculo", e);
             return ResponseEntity.badRequest().build();
