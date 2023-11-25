@@ -12,7 +12,7 @@ public interface ReserveService {
     public List<Space> getAllReservesAvailables(InitReservaDto initReservaDto);
     public List<Space> getAllReservesNotAvailables(InitReservaDto initReservaDto);
     public List<Reserve> getReservesByUser(Long dni);
-    public Reserve getReserveById(Long id);
+    public ReserveDto getReserveById(Long id);
     public void saveReserve(ReserveDto reserveDto);
     public void deleteReserve(Long id);
 }
