@@ -22,10 +22,22 @@ public class SpaceController {
         try {
             return ResponseEntity.ok(spaceService.getAllSpaces());
         } catch (Exception e) {
-            log.error("Error al obtener la lista de pisos", e);
+            log.error("Error al obtener la lista de espacios", e);
             return ResponseEntity.badRequest().build();
         }
     }
+//    registrar espacio por piso segun el id del piso
+    @GetMapping("/allByFloor/{id}")
+    public ResponseEntity<List<SpaceDto>> getAllSpacesByFloor(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(spaceService.getAllSpacesByFloor(id));
+        } catch (Exception e) {
+            log.error("Error al obtener la lista de espacios", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<SpaceDto> getFloorById(@PathVariable Long id) {
