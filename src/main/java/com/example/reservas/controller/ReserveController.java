@@ -19,7 +19,7 @@ public class ReserveController {
     @Autowired
     private ReserveService reserveService;
 
-    @GetMapping("/all")
+    @PostMapping("/all")
     public ResponseEntity<List<Space>> getAllFloors(@RequestBody InitReservaDto initReservaDto) {
         try {
             return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
