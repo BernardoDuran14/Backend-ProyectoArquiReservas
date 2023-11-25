@@ -15,4 +15,6 @@ public interface SpaceService {
     public void updateSpace(SpaceDto spaceDto);
 
     public void deleteSpace(Long id);
+
+    void saveSpaceByFloor(SpaceDto spaceDto, Long id);
 }
