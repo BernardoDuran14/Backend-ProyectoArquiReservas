@@ -1,6 +1,5 @@
 package com.example.reservas.service.impl;
 
-import com.example.reservas.controller.SpaceController;
 import com.example.reservas.dto.InitReservaDto;
 import com.example.reservas.dto.ReserveDto;
 import com.example.reservas.dto.SpaceDto;
@@ -9,16 +8,19 @@ import com.example.reservas.repository.*;
 import com.example.reservas.service.inter.CustomerService;
 import com.example.reservas.service.inter.KeycloakService;
 import com.example.reservas.service.inter.ReserveService;
-import com.example.reservas.service.inter.SpaceService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.example.reservas.dto.DateUtil;
+import com.example.reservas.dto.StringUtil;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class ReserveImpl implements ReserveService {
 
@@ -45,12 +47,20 @@ public class ReserveImpl implements ReserveService {
 
     @Override
     public List<Space> getAllReservesAvailables(InitReservaDto initReservaDto) {
-        List<Space> reserves = reserveRepository.listaEspaciosDisponiblesPorPisoYFecha
-                (initReservaDto.getName(),
-                initReservaDto.getFechaInicio(), initReservaDto.getFechaFin(),
-                initReservaDto.getHoraInicio(), initReservaDto.getHoraFin());
-
-        return reserves;
+         Date fechaInicio = new Date();
+         Date fechaFin = new Date();
+         // utilizar la clase DateUtil para convertir la fecha, de String a Date
+         fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, initReservaDto.getFechaInicio());
+         fechaFin = DateUtil.toDate(DateUtil.FORMAT_DATE, initReservaDto.getFechaFin());
+         log.info("fechaInicio: " + fechaInicio);
+         log.info("fechaFin: " + fechaFin);
+         int horaInicio = Integer.parseInt(initReservaDto.getHoraInicio());
+         int horaFin = Integer.parseInt(initReservaDto.getHoraFin());
+            // obtener la lista de espacios disponibles por piso y fecha
+         List<Space> spaces = reserveRepository.listaEspaciosDisponiblesPorPisoYFecha
+                (initReservaDto.getName(), fechaInicio, fechaFin,
+                horaInicio, horaFin);
+         return spaces;
     }
 
     @Override
@@ -78,9 +88,9 @@ public class ReserveImpl implements ReserveService {
     }
 
     @Override
-    public ReserveDto getReserveById(Long id) {
+    public Reserve getReserveById(Long id) {
         Reserve reserve = reserveRepository.findById(id).get();
-        return mapToDto(reserve);
+        return reserve;
     }
 
     @Override
@@ -112,7 +122,15 @@ public class ReserveImpl implements ReserveService {
         }
         space = spaceRepository.findWithId(reserveDto.getSpaceId());
 
+        Date fechaInicio = new Date();
+        Date fechaFin = new Date();
+        // utilizar la clase DateUtil para convertir la fecha, de String a Date
+        fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, reserveDto.getStartDate());
+        fechaFin = DateUtil.toDate(DateUtil.FORMAT_DATE, reserveDto.getEndDate());
+
         BeanUtils.copyProperties(reserveDto, reserve);
+        reserve.setStartDate(fechaInicio);
+        reserve.setEndDate(fechaFin);
 
         reserve.setEmployee(employee);
         reserve.setCustomer(customer);

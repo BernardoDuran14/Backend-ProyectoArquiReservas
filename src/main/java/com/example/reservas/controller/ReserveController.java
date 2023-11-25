@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -24,6 +25,8 @@ public class ReserveController {
     @GetMapping("/all")
     public ResponseEntity<List<Space>> getAllReservesAvailables(@RequestBody InitReservaDto initReservaDto) {
         try {
+            initReservaDto.setFechaInicio(initReservaDto.getFechaInicio());
+            log.info("fechaInicio: " + initReservaDto.getFechaInicio());
             return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
         } catch (Exception e) {
             log.error("Error al obtener la lista de pisos", e);

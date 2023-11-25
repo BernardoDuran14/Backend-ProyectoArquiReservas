@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -11,8 +12,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class InitReservaDto {
     private String name;
-    private Date fechaInicio; // forma
-    private Date fechaFin;
-    private int horaInicio;
-    private int horaFin;
+    private String fechaInicio; // forma
+    private String fechaFin;
+    private String horaInicio;
+    private String horaFin;
 }

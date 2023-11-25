@@ -1,44 +1,58 @@
 server:
   port: 7777
 
+
 spring:
   application:
     name: reserves
-  #  rabbitmq:
-  #    host: localhost
-  #    port: 5672
-  #    username: guest
-  #    password: guest
-  #    virtual-host: "/"
-  #
+  ##  rabbitmq:
+  ##    host: localhost
+  ##    port: 5672
+  ##    username: guest
+  ##    password: guest
+  ##    virtual-host: "/"
+  ##
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://192.168.1.9:8080/realms/parking/protocol/openid-connect/certs
-          issuer-uri: http://192.168.1.9:8080/realms/parking
+          jwk-set-uri: http://localhost:8080/realms/parking/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8080/realms/parking
+
+
 
 
   datasource:
-    url: jdbc:postgresql://192.168.1.9:5432/parqueo
+    url: jdbc:postgresql://localhost:5432/parqueo
     username: usertest
     password: 123456
     driver-class-name: org.postgresql.Driver
+
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8714/eureka/
 
+
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: parking-files
+
+
 token:
   principal-attribute: preferred_username
   resource-id: parking-backend
-  private-key: tkEi3OYulP6VqcRhLhPtvlj1BGKFGSiw
+  private-key: ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3
+
 
 management:
   tracing:
     sampling:
       probability: 1.0
+
 
 logging:
   pattern:
