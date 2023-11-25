@@ -26,7 +26,7 @@ public class SpaceController {
             return ResponseEntity.badRequest().build();
         }
     }
-//    registrar espacio por piso segun el id del piso
+//    Obtner espacio por piso segun el id del piso
     @GetMapping("/allByFloor/{id}")
     public ResponseEntity<List<SpaceDto>> getAllSpacesByFloor(@PathVariable Long id) {
         try {
@@ -34,6 +34,19 @@ public class SpaceController {
         } catch (Exception e) {
             log.error("Error al obtener la lista de espacios", e);
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+//    registrar espacio por piso segun el id del piso
+
+    @PostMapping("/saveByFloor/{id}")
+    public ResponseEntity<String> saveSpaceByFloor(@RequestBody SpaceDto spaceDto, @PathVariable Long id) {
+        try {
+            spaceService.saveSpaceByFloor(spaceDto, id);
+            return ResponseEntity.ok("Espacio guardado correctamente");
+        } catch (Exception e) {
+            log.error("Error al guardar el espacio", e);
+            return ResponseEntity.badRequest().body("Error al guardar el espacio");
         }
     }
 

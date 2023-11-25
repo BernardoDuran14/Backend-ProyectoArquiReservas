@@ -73,4 +73,14 @@ public class SpaceImpl implements SpaceService {
         space.setDeleted(true);
         spaceRepository.save(space);
     }
+
+    @Override
+    public void saveSpaceByFloor(SpaceDto spaceDto, Long id) {
+        Space space = new Space();
+        Floor floor = floorRepository.findById(id).get();
+        BeanUtils.copyProperties(spaceDto, space);
+        space.setFloor(floor);
+        spaceRepository.save(space);
+
+    }
 }
