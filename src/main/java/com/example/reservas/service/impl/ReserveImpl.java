@@ -73,9 +73,9 @@ public class ReserveImpl implements ReserveService {
     }
 
     @Override
-    public ReserveDto getReserveById(Long id) {
+    public Reserve getReserveById(Long id) {
         Reserve reserve = reserveRepository.findById(id).get();
-        return mapToDto(reserve);
+        return reserve;
     }
 
     @Override
