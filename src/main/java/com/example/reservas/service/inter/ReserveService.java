@@ -10,6 +10,7 @@ import com.example.reservas.entity.Space;
 
 public interface ReserveService {
     public List<Space> getAllReservesAvailables(InitReservaDto initReservaDto);
+    public List<Space> getAllReservesNotAvailables(InitReservaDto initReservaDto);
     public List<Reserve> getReservesByUser(Long dni);
     public Reserve getReserveById(Long id);
     public void saveReserve(ReserveDto reserveDto);

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.List;
 
@@ -23,6 +24,16 @@ public class ReserveController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Space>> getAllReservesAvailables(@RequestBody InitReservaDto initReservaDto) {
+        try {
+            return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
+        } catch (Exception e) {
+            log.error("Error al obtener la lista de pisos", e);
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/not_availables")
+    public ResponseEntity<List<Space>> getAllReservesNotAvailables(@RequestBody InitReservaDto initReservaDto) {
         try {
             return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
         } catch (Exception e) {

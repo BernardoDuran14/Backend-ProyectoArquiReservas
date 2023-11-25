@@ -104,6 +104,7 @@ public class VehiclesImpl implements VehiclesService {
         vehicle1.setColor(vehicleDto.getColor());
         vehicle1.setBrand(vehicleDto.getBrand());
         vehicle1.setLicensePlate(vehicleDto.getLicensePlate());
+        vehicle1.setEtag(vehicleDto.getEtag());
         vehicle1.setCustomer(customerResponseEntity.getBody());
         vehiclesRepository.save(vehicle1);
     }

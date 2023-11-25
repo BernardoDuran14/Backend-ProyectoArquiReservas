@@ -11,7 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class InitReservaDto {
     private String name;
-    private Date fechaInicio;
+    private Date fechaInicio; // forma
     private Date fechaFin;
     private int horaInicio;
     private int horaFin;
