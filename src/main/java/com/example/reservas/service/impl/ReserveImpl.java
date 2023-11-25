@@ -45,12 +45,17 @@ public class ReserveImpl implements ReserveService {
 
     @Override
     public List<Space> getAllReservesAvailables(InitReservaDto initReservaDto) {
-        List<Space> reserves = reserveRepository.listaEspaciosNoDisponiblesPorPisoYFecha
+        List<Space> reserves = reserveRepository.listaEspaciosDisponiblesPorPisoYFecha
                 (initReservaDto.getName(),
                 initReservaDto.getFechaInicio(), initReservaDto.getFechaFin(),
                 initReservaDto.getHoraInicio(), initReservaDto.getHoraFin());
 
         return reserves;
+    }
+
+    @Override
+    public List<Space> getAllReservesNotAvailables(InitReservaDto initReservaDto) {
+        return null;
     }
 
     public ReserveDto mapToDto(Reserve reserve) {

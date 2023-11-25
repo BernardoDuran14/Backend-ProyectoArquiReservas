@@ -14,5 +14,7 @@ public class VehiclesDtoSpecial {
     private String brand;
     private String color;
     private String licensePlate;
+    private String etag;
     private CustomerDtoSpecial customer;
+
 }

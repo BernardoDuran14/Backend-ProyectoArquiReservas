@@ -20,9 +20,18 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
             "and r.status = false and r.space.floor.name = :name " +
             "and r.startDate >= :fechaInicio and r.endDate <= :fechaFin " +
             "and r.startTime >= :horaInicio and r.endTime <= :horaFin ")
-    public List<Space> listaEspaciosNoDisponiblesPorPisoYFecha(@PathVariable String name, @PathVariable Date fechaInicio,
+    public List<Space> listaEspaciosDisponiblesPorPisoYFecha(@PathVariable String name, @PathVariable Date fechaInicio,
                                                                @PathVariable Date fechaFin, @PathVariable int horaInicio,
                                                                @PathVariable int horaFin);
+
+    @Query("SELECT s FROM Reserve r, Space s " + // hacer los joins
+            "WHERE r.deleted = false and r.space.id= s.id " +
+            "and r.status = true and r.space.floor.name = :name " +
+            "and r.startDate >= :fechaInicio and r.endDate <= :fechaFin " +
+            "and r.startTime >= :horaInicio and r.endTime <= :horaFin ")
+    public List<Space> listaEspaciosNoDisponiblesPorPisoYFecha(@PathVariable String name, @PathVariable Date fechaInicio,
+                                                             @PathVariable Date fechaFin, @PathVariable int horaInicio,
+                                                             @PathVariable int horaFin);
 
     // quiero revisar todas las reservas de un usuario, como un historial
     @Query("SELECT r FROM Reserve r WHERE r.deleted = false and r.customer.person.dni = :dni")

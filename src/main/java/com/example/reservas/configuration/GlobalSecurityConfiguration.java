@@ -31,11 +31,11 @@ public class GlobalSecurityConfiguration
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests( authorizeHttpRequests -> {
             authorizeHttpRequests
-                    .requestMatchers("/api/v1/vehicles/all").hasRole("ADMIN")
-                    .requestMatchers("/api/v1/vehicles/{id}").hasRole("ADMIN")
-                    .requestMatchers("/api/v1/vehicles/save").hasRole("ADMIN")
-                    .requestMatchers("/api/v1/vehicles/save_both").hasRole("ADMIN")
-                    .requestMatchers("/api/v1/vehicles/delete/{id}").hasRole("ADMIN")
+                    .requestMatchers("/api/v1/vehicles/all").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers("/api/v1/vehicles/{id}").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers("/api/v1/vehicles/save").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers("/api/v1/vehicles/save_both").hasAnyRole("ADMIN", "USER")
+                    .requestMatchers("/api/v1/vehicles/delete/{id}").hasAnyRole("ADMIN", "USER")
                     .anyRequest().authenticated();
         });
         http.oauth2ResourceServer( (oauth2) -> {

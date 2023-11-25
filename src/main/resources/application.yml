@@ -4,13 +4,13 @@ server:
 spring:
   application:
     name: reserves
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: guest
-#    password: guest
-#    virtual-host: "/"
-#
+  #  rabbitmq:
+  #    host: localhost
+  #    port: 5672
+  #    username: guest
+  #    password: guest
+  #    virtual-host: "/"
+  #
   security:
     oauth2:
       resourceserver:
