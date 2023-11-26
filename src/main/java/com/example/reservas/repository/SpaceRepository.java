@@ -15,6 +15,9 @@ public interface SpaceRepository extends JpaRepository<Space, Long> {
     @Query("SELECT s FROM Space s WHERE s.floor.id = :id AND s.deleted = false")
     public List<Space> findAllByFloorId(@PathVariable Long id);
 
+    @Query("SELECT s FROM Space s WHERE s.floor.name = :name AND s.deleted = false")
+    public List<Space> findAllByFloorNameAndDeletedFalse(String name);
+
     @Query("SELECT s FROM Space s WHERE s.id = :id AND s.deleted = false")
     public Space findWithId(@PathVariable Long id);
 }

@@ -1,4 +1,5 @@
 package com.example.reservas.controller;
+import com.example.reservas.dto.EspaciosDisponiblesDto;
 import com.example.reservas.dto.InitReservaDto;
 import com.example.reservas.dto.ReserveDto;
 import com.example.reservas.dto.SpaceDto;
@@ -23,19 +24,7 @@ public class ReserveController {
     private ReserveService reserveService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Space>> getAllReservesAvailables(@RequestBody InitReservaDto initReservaDto) {
-        try {
-            initReservaDto.setFechaInicio(initReservaDto.getFechaInicio());
-            log.info("fechaInicio: " + initReservaDto.getFechaInicio());
-            return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
-        } catch (Exception e) {
-            log.error("Error al obtener la lista de pisos", e);
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @GetMapping("/not_availables")
-    public ResponseEntity<List<Space>> getAllReservesNotAvailables(@RequestBody InitReservaDto initReservaDto) {
+    public ResponseEntity<List<EspaciosDisponiblesDto>> getAllReservesAvailables(@RequestBody InitReservaDto initReservaDto) {
         try {
             return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
         } catch (Exception e) {
@@ -43,6 +32,16 @@ public class ReserveController {
             return ResponseEntity.badRequest().build();
         }
     }
+//
+//    @GetMapping("/not_availables")
+//    public ResponseEntity<List<Space>> getAllReservesNotAvailables(@RequestBody InitReservaDto initReservaDto) {
+//        try {
+//            return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
+//        } catch (Exception e) {
+//            log.error("Error al obtener la lista de pisos", e);
+//            return ResponseEntity.badRequest().build();
+//        }
+//    }
 
     @PostMapping("/save")
     public ResponseEntity<String> saveReserve(@RequestBody ReserveDto reserveDto) {

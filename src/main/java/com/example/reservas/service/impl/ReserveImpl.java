@@ -1,8 +1,6 @@
 package com.example.reservas.service.impl;
 
-import com.example.reservas.dto.InitReservaDto;
-import com.example.reservas.dto.ReserveDto;
-import com.example.reservas.dto.SpaceDto;
+import com.example.reservas.dto.*;
 import com.example.reservas.entity.*;
 import com.example.reservas.repository.*;
 import com.example.reservas.service.inter.CustomerService;
@@ -13,8 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import com.example.reservas.dto.DateUtil;
-import com.example.reservas.dto.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -46,7 +42,7 @@ public class ReserveImpl implements ReserveService {
     private String keycloakPrivateKey;
 
     @Override
-    public List<Space> getAllReservesAvailables(InitReservaDto initReservaDto) {
+    public List<EspaciosDisponiblesDto> getAllReservesAvailables(InitReservaDto initReservaDto) {
          Date fechaInicio = new Date();
          Date fechaFin = new Date();
          // utilizar la clase DateUtil para convertir la fecha, de String a Date
@@ -57,10 +53,34 @@ public class ReserveImpl implements ReserveService {
          int horaInicio = Integer.parseInt(initReservaDto.getHoraInicio());
          int horaFin = Integer.parseInt(initReservaDto.getHoraFin());
             // obtener la lista de espacios disponibles por piso y fecha
-         List<Space> spaces = reserveRepository.listaEspaciosDisponiblesPorPisoYFecha
-                (initReservaDto.getName(), fechaInicio, fechaFin,
-                horaInicio, horaFin);
-         return spaces;
+         List<Space> spaces = reserveRepository.listaEspaciosNoDisponiblesPorPisoYFecha
+                (initReservaDto.getName(), fechaInicio, horaInicio);
+         // mapear la lista de espacios disponibles a una lista de dto
+         List<EspaciosDisponiblesDto> espaciosDisponiblesLista = mapearEspaciosDisponibles(spaces, initReservaDto.getName());
+         return espaciosDisponiblesLista;
+    }
+
+    public List<EspaciosDisponiblesDto> mapearEspaciosDisponibles(List<Space> spaces, String nameFloor) {
+        List<EspaciosDisponiblesDto> espaciosDisponiblesLista = null;
+        List<Space> spacesAll = spaceRepository.findAllByFloorNameAndDeletedFalse(nameFloor);
+
+        // comparar con un for si el espacio de la lista de todos los espacios esta en la lista de espacios totales
+        // si es asi poner disponible = true, sino poner disponible = false
+        for(Space space : spacesAll) {
+            EspaciosDisponiblesDto espacioDisponibleDto = new EspaciosDisponiblesDto();
+            espacioDisponibleDto.setNombreEspacio(space.getName());
+            espacioDisponibleDto.setDisponible(false);
+            for(Space space1 : spaces) {
+                if(space.getId() == space1.getId()) {
+                    espacioDisponibleDto.setDisponible(true);
+                }else{
+                    espacioDisponibleDto.setDisponible(false);
+                }
+
+            }
+            espaciosDisponiblesLista.add(espacioDisponibleDto);
+        }
+        return espaciosDisponiblesLista;
     }
 
     @Override
