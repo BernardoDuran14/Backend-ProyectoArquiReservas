@@ -123,19 +123,17 @@ public class ReserveImpl implements ReserveService {
         space = spaceRepository.findWithId(reserveDto.getSpaceId());
 
         Date fechaInicio = new Date();
-        Date fechaFin = new Date();
         // utilizar la clase DateUtil para convertir la fecha, de String a Date
         fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, reserveDto.getStartDate());
-        fechaFin = DateUtil.toDate(DateUtil.FORMAT_DATE, reserveDto.getEndDate());
 
         BeanUtils.copyProperties(reserveDto, reserve);
         reserve.setStartDate(fechaInicio);
-        reserve.setEndDate(fechaFin);
 
         reserve.setEmployee(employee);
         reserve.setCustomer(customer);
         reserve.setVehicles(vehicle);
         reserve.setSpace(space);
+        reserve.setStartTime(Integer.parseInt(reserveDto.getStartTime()));
 
         reserve.setStatus(false); // false = no pagado, true = pagado
         reserve.setDeleted(false);

@@ -20,7 +20,5 @@ public class ReserveDto {
     private Boolean def;
     private Boolean status;
     private String startDate;
-    private String endDate;
     private String startTime;
-    private String endTime;
 }

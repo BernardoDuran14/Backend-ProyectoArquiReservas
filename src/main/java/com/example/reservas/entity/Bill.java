@@ -23,6 +23,9 @@ public class Bill implements Serializable {
     @Column(name = "p_bill_nit")
     private String nit;
 
+    @Column(name = "p_bill_name")
+    private String name;
+
     @Column(name = "p_bill_date")
     private Date date;
 
