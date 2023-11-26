@@ -64,8 +64,11 @@ public class ReserveImpl implements ReserveService {
         List<EspaciosDisponiblesDto> espaciosDisponiblesLista = null;
         List<Space> spacesAll = spaceRepository.findAllByFloorNameAndDeletedFalse(nameFloor);
 
-        // comparar con un for si el espacio de la lista de todos los espacios esta en la lista de espacios totales
-        // si es asi poner disponible = true, sino poner disponible = false
+        if(spaces.size() == 0) {
+            espaciosDisponiblesLista = mapearEspaciosDisponiblesTodos(spacesAll);
+            return espaciosDisponiblesLista;
+        }
+
         for(Space space : spacesAll) {
             EspaciosDisponiblesDto espacioDisponibleDto = new EspaciosDisponiblesDto();
             espacioDisponibleDto.setId(space.getId());
@@ -77,6 +80,18 @@ public class ReserveImpl implements ReserveService {
                     espacioDisponibleDto.setDisponible(true);
                 }
             }
+            espaciosDisponiblesLista.add(espacioDisponibleDto);
+        }
+        return espaciosDisponiblesLista;
+    }
+
+    public List<EspaciosDisponiblesDto> mapearEspaciosDisponiblesTodos(List<Space> spaces) {
+        List<EspaciosDisponiblesDto> espaciosDisponiblesLista = null;
+        for(Space space : spaces) {
+            EspaciosDisponiblesDto espacioDisponibleDto = new EspaciosDisponiblesDto();
+            espacioDisponibleDto.setId(space.getId());
+            espacioDisponibleDto.setNombreEspacio(space.getName());
+            espacioDisponibleDto.setDisponible(true);
             espaciosDisponiblesLista.add(espacioDisponibleDto);
         }
         return espaciosDisponiblesLista;
