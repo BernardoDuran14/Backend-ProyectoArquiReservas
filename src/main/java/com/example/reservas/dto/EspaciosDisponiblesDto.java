@@ -10,6 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class EspaciosDisponiblesDto {
+    Long id;
     String nombreEspacio;
     Boolean disponible;
 }

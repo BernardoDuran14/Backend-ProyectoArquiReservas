@@ -68,15 +68,14 @@ public class ReserveImpl implements ReserveService {
         // si es asi poner disponible = true, sino poner disponible = false
         for(Space space : spacesAll) {
             EspaciosDisponiblesDto espacioDisponibleDto = new EspaciosDisponiblesDto();
+            espacioDisponibleDto.setId(space.getId());
             espacioDisponibleDto.setNombreEspacio(space.getName());
-            espacioDisponibleDto.setDisponible(false);
             for(Space space1 : spaces) {
                 if(space.getId() == space1.getId()) {
-                    espacioDisponibleDto.setDisponible(true);
-                }else{
                     espacioDisponibleDto.setDisponible(false);
+                }else{
+                    espacioDisponibleDto.setDisponible(true);
                 }
-
             }
             espaciosDisponiblesLista.add(espacioDisponibleDto);
         }
