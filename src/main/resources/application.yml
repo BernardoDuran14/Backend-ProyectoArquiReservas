@@ -16,14 +16,14 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: ${JWT_URI:http://localhost:8080/realms/parking/protocol/openid-connect/certs}
-          issuer-uri: ${ISSUER_URI:http://localhost:8080/realms/parking}
+          jwk-set-uri: ${JWT_URI:http://192.168.1.212:8080/realms/parking/protocol/openid-connect/certs}
+          issuer-uri: ${ISSUER_URI:http://192.168.1.212:8080/realms/parking}
 
 
 
 
   datasource:
-    url: ${BD_URL:jdbc:postgresql://localhost:5432/parqueo}
+    url: ${BD_URL:jdbc:postgresql://192.168.1.212:5432/parqueo}
     username: ${BD_USER:usertest}
     password: ${BD_PWD:123456}
     driver-class-name: org.postgresql.Driver
@@ -32,11 +32,11 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: ${EUREKA_URL:http://localhost:8714/eureka/}
+      defaultZone: ${EUREKA_URL:http://192.168.1.212:8714/eureka/}
 
 
 minio:
-  url: ${MINIO_URL:http://localhost:9000}
+  url: ${MINIO_URL:http://192.168.1.212:9000}
   access-key: ${MINIO_USER:minioadmin}
   secret-key: ${MINIO_PWD:minioadmin}
   bucket-name: ${MINIO_BUCKET:parking-files}
@@ -45,7 +45,7 @@ minio:
 token:
   principal-attribute: preferred_username
   resource-id: parking-backend
-  private-key: ${KEYCLOAK_TOKEN:ZgBAyWoHLGK7nJjQnLPvjYPrfbYibFy3}
+  private-key: ${KEYCLOAK_TOKEN:RGtdPpFHPwf6Nd8zTiBSjWeBGLOzWubZ}
 
 
 management:

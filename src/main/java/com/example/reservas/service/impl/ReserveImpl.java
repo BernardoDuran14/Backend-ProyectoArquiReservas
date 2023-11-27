@@ -2,7 +2,7 @@ package com.example.reservas.service.impl;
 
 import com.example.reservas.dto.*;
 import com.example.reservas.entity.*;
-import com.example.reservas.producer.NotificationProducer;
+//import com.example.reservas.producer.NotificationProducer;
 import com.example.reservas.repository.*;
 import com.example.reservas.service.inter.CustomerService;
 import com.example.reservas.service.inter.KeycloakService;
@@ -37,8 +37,8 @@ public class ReserveImpl implements ReserveService {
     @Autowired
     private KeycloakService keycloakService;
 
-    @Autowired
-    private NotificationProducer notificationProducer;
+//    @Autowired
+//    private NotificationProducer notificationProducer;
 
     @Value("${token.resource-id}")
     private String keycloakClient;
@@ -187,10 +187,10 @@ public class ReserveImpl implements ReserveService {
         reserveRepository.save(reserve);
     }
 
-    @Override
-    public String sendNotification(String message) {
-        NotificationDto notificationDto = new NotificationDto(message,"REST",new Date());
-
-        return notificationProducer.sendNotification(notificationDto,"parking-notification");
-    }
+//    @Override
+//    public String sendNotification(String message) {
+//        NotificationDto notificationDto = new NotificationDto(message,"REST",new Date());
+//
+//        return notificationProducer.sendNotification(notificationDto,"parking-notification");
+//    }
 }
