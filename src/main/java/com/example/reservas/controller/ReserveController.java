@@ -26,7 +26,7 @@ public class ReserveController {
     @PostMapping("/all")
     public ResponseEntity<List<EspaciosDisponiblesDto>> getAllReservesAvailables(@RequestBody InitReservaDto initReservaDto) {
         try {
-            String notification = reserveService.sendNotification("Obteniendo lista de pisos disponibles");
+//            String notification = reserveService.sendNotification("Obteniendo lista de pisos disponibles");
             return ResponseEntity.ok(reserveService.getAllReservesAvailables(initReservaDto));
         } catch (Exception e) {
             log.error("Error al obtener la lista de pisos", e);
@@ -47,7 +47,7 @@ public class ReserveController {
     @PostMapping("/save")
     public ResponseEntity<String> saveReserve(@RequestBody ReserveDto reserveDto) {
         try {
-            String notification = reserveService.sendNotification("Guardando piso");
+//            String notification = reserveService.sendNotification("Guardando piso");
             reserveService.saveReserve(reserveDto);
             return ResponseEntity.ok("Piso guardado correctamente");
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class ReserveController {
     @GetMapping("/user/{dni}")
     public ResponseEntity<List<Reserve>> getReservesByUser(@PathVariable Long dni) {
         try {
-            String notification = reserveService.sendNotification("Obteniendo lista de pisos");
+//            String notification = reserveService.sendNotification("Obteniendo lista de pisos");
             return ResponseEntity.ok(reserveService.getReservesByUser(dni));
         } catch (Exception e) {
             log.error("Error al obtener la lista de pisos", e);
@@ -70,7 +70,7 @@ public class ReserveController {
     @GetMapping("/{id}")
     public ResponseEntity<Reserve> getReserveById(@PathVariable Long id) {
         try {
-            String notification = reserveService.sendNotification("Obteniendo piso");
+//            String notification = reserveService.sendNotification("Obteniendo piso");
             return ResponseEntity.ok(reserveService.getReserveById(id));
         } catch (Exception e) {
             log.error("Error al obtener el piso", e);
@@ -81,7 +81,7 @@ public class ReserveController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReserve(@PathVariable Long id) {
         try {
-            String notification = reserveService.sendNotification("Eliminando piso");
+//            String notification = reserveService.sendNotification("Eliminando piso");
             reserveService.deleteReserve(id);
             return ResponseEntity.ok("Piso eliminado correctamente");
         } catch (Exception e) {

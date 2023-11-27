@@ -90,7 +90,7 @@ public class VehiclesController {
         }
     }
 
-    @PostMapping("/save_both")
+    @PostMapping("/save_both_1")
     public ResponseEntity<String> saveVehiclesAndCustomer(@RequestParam("file") MultipartFile file, @RequestParam("data") String vehicles) {
         try {
             MultipartFile multipartFile = file;
@@ -128,6 +128,17 @@ public class VehiclesController {
             customerDtoSpecial.setPerson(personDto);
             vehiclesDtoSpecial.setCustomer(customerDtoSpecial);
 
+            vehiclesService.saveVehiclesAndCustomer(vehiclesDtoSpecial);
+            return ResponseEntity.ok("Vehiculo guardado correctamente");
+        } catch (Exception e) {
+            log.error("Error al guardar el vehiculo", e);
+            return ResponseEntity.badRequest().body("Error al guardar el vehiculo");
+        }
+    }
+
+    @PostMapping("/save_both")
+    public ResponseEntity<String> saveVehiclesAndCustomerV2(@RequestBody VehiclesDtoSpecial vehiclesDtoSpecial) {
+        try {
             vehiclesService.saveVehiclesAndCustomer(vehiclesDtoSpecial);
             return ResponseEntity.ok("Vehiculo guardado correctamente");
         } catch (Exception e) {

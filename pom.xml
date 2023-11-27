@@ -138,7 +138,7 @@
 			<version>8.5.2</version>
 		</dependency>
 
-<!--		&lt;!&ndash; Spring AMQP para la integración con RabbitMQ &ndash;&gt;-->
+		<!-- Spring AMQP para la integración con RabbitMQ -->
 <!--		<dependency>-->
 <!--			<groupId>org.springframework.boot</groupId>-->
 <!--			<artifactId>spring-boot-starter-amqp</artifactId>-->
