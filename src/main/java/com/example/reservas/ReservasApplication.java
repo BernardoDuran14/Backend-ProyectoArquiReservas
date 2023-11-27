@@ -2,6 +2,8 @@ package com.example.reservas;
 
 //import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 //import org.springframework.boot.ApplicationRunner;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -23,12 +25,19 @@ public class ReservasApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(ReservasApplication.class);
 	}
-//
-//	@Bean
-//	public ApplicationRunner runner(ConnectionFactory connectionFactory) {
-//		return ApplicationRunner -> {
-//			var connection = connectionFactory.createConnection();
-//			connection.close();
-//		};
-//	}
+
+	@Bean
+	public ApplicationRunner runner(ConnectionFactory connectionFactory) {
+		return ApplicationRunner -> {
+			Boolean open = false;
+			while (!open) {
+				try {
+					connectionFactory.createConnection();
+					open = true;
+				} catch (Exception e) {
+					Thread.sleep(5000);
+				}
+			}
+		};
+	}
 }

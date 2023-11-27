@@ -22,6 +22,14 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
             "and r.startTime = :horaInicio ")
     public List<Space> listaEspaciosNoDisponiblesPorPisoYFecha(@PathVariable String name, @PathVariable Date fechaInicio,
                                                                @PathVariable int horaInicio);
+    /* convertir el anterior query a uno que pueda utilizar en consola de postgres
+    SELECT s.id, s.name, s.floor_id, s.deleted, s.created_at, s.updated_at
+    FROM reserves r, spaces s
+    WHERE r.deleted = false and r.space_id = s.id
+    and r.status = false and s.floor_id = 1
+    and r.start_date = '2021-06-01'
+    and r.start_time = 8;
+     */
 
 //    @Query("SELECT s FROM Reserve r, Space s " + // hacer los joins
 //            "WHERE r.deleted = false and r.space.id= s.id " +

@@ -67,7 +67,11 @@ public class VehiclesImpl implements VehiclesService {
     @Override
     public void saveVehicles(VehiclesDto vehiclesDto) {
         Vehicles vehicles = new Vehicles();
-        BeanUtils.copyProperties(vehiclesDto, vehicles);
+
+        vehicles.setColor(vehiclesDto.getColor());
+        vehicles.setBrand(vehiclesDto.getBrand());
+        vehicles.setLicensePlate(vehiclesDto.getLicensePlate());
+
         Map<String, String> data = Map.of(
                 "grant_type", "client_credentials",
                 "client_id", keycloakClient,

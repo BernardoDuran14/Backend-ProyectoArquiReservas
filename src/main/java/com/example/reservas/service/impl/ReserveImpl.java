@@ -2,6 +2,7 @@ package com.example.reservas.service.impl;
 
 import com.example.reservas.dto.*;
 import com.example.reservas.entity.*;
+import com.example.reservas.producer.NotificationProducer;
 import com.example.reservas.repository.*;
 import com.example.reservas.service.inter.CustomerService;
 import com.example.reservas.service.inter.KeycloakService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,9 @@ public class ReserveImpl implements ReserveService {
     @Autowired
     private KeycloakService keycloakService;
 
+    @Autowired
+    private NotificationProducer notificationProducer;
+
     @Value("${token.resource-id}")
     private String keycloakClient;
 
@@ -44,14 +49,11 @@ public class ReserveImpl implements ReserveService {
     @Override
     public List<EspaciosDisponiblesDto> getAllReservesAvailables(InitReservaDto initReservaDto) {
          Date fechaInicio = new Date();
-         Date fechaFin = new Date();
-         // utilizar la clase DateUtil para convertir la fecha, de String a Date
+
          fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, initReservaDto.getFechaInicio());
-         fechaFin = DateUtil.toDate(DateUtil.FORMAT_DATE, initReservaDto.getFechaFin());
          log.info("fechaInicio: " + fechaInicio);
-         log.info("fechaFin: " + fechaFin);
          int horaInicio = Integer.parseInt(initReservaDto.getHoraInicio());
-         int horaFin = Integer.parseInt(initReservaDto.getHoraFin());
+
             // obtener la lista de espacios disponibles por piso y fecha
          List<Space> spaces = reserveRepository.listaEspaciosNoDisponiblesPorPisoYFecha
                 (initReservaDto.getName(), fechaInicio, horaInicio);
@@ -61,7 +63,7 @@ public class ReserveImpl implements ReserveService {
     }
 
     public List<EspaciosDisponiblesDto> mapearEspaciosDisponibles(List<Space> spaces, String nameFloor) {
-        List<EspaciosDisponiblesDto> espaciosDisponiblesLista = null;
+        List<EspaciosDisponiblesDto> espaciosDisponiblesLista = new ArrayList<>();
         List<Space> spacesAll = spaceRepository.findAllByFloorNameAndDeletedFalse(nameFloor);
 
         if(spaces.size() == 0) {
@@ -86,7 +88,7 @@ public class ReserveImpl implements ReserveService {
     }
 
     public List<EspaciosDisponiblesDto> mapearEspaciosDisponiblesTodos(List<Space> spaces) {
-        List<EspaciosDisponiblesDto> espaciosDisponiblesLista = null;
+        List<EspaciosDisponiblesDto> espaciosDisponiblesLista = new ArrayList<>();
         for(Space space : spaces) {
             EspaciosDisponiblesDto espacioDisponibleDto = new EspaciosDisponiblesDto();
             espacioDisponibleDto.setId(space.getId());
@@ -160,7 +162,11 @@ public class ReserveImpl implements ReserveService {
         // utilizar la clase DateUtil para convertir la fecha, de String a Date
         fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, reserveDto.getStartDate());
 
-        BeanUtils.copyProperties(reserveDto, reserve);
+        // hacer los set de los atributos de la reserva
+        reserve.setCustomer(customer);
+        reserve.setVehicles(vehicle);
+        reserve.setSpace(space);
+        reserve.setStartTime(Integer.parseInt(reserveDto.getStartTime()));
         reserve.setStartDate(fechaInicio);
 
         reserve.setEmployee(employee);
@@ -179,5 +185,12 @@ public class ReserveImpl implements ReserveService {
         Reserve reserve = reserveRepository.findById(id).get();
         reserve.setDeleted(true);
         reserveRepository.save(reserve);
+    }
+
+    @Override
+    public String sendNotification(String message) {
+        NotificationDto notificationDto = new NotificationDto(message,"REST",new Date());
+
+        return notificationProducer.sendNotification(notificationDto,"parking-notification");
     }
 }

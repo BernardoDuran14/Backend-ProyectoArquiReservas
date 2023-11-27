@@ -16,4 +16,5 @@ public interface ReserveService {
     public Reserve getReserveById(Long id);
     public void saveReserve(ReserveDto reserveDto);
     public void deleteReserve(Long id);
+    public String sendNotification(String message);
 }

@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class VehiclesDto {
+public class
+VehiclesDto {
 
 //    @lombok.Getter(onMethod_ = {@JsonProperty("p_vehicles_id")})
 //    @lombok.Setter(onMethod_ = {@JsonProperty("p_vehicles_id")})
