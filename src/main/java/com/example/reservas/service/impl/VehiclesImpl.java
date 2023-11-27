@@ -71,6 +71,7 @@ public class VehiclesImpl implements VehiclesService {
         vehicles.setColor(vehiclesDto.getColor());
         vehicles.setBrand(vehiclesDto.getBrand());
         vehicles.setLicensePlate(vehiclesDto.getLicensePlate());
+        vehicles.setDeleted(false);
 
         Map<String, String> data = Map.of(
                 "grant_type", "client_credentials",

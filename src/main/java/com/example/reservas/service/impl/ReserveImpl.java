@@ -146,11 +146,11 @@ public class ReserveImpl implements ReserveService {
             // utilizar el microservicio de EmployeeService
             employee = customerService.getEmployeeById(token, reserveDto.getEmployeeId()).getBody();
             // la entrada al parqueo se hizo por un empleado
-            reserve.setDef("Normal");
+            reserve.setDef(Boolean.parseBoolean("Normal"));
         }else {
             employee = customerService.getEmployeeById(token,1L).getBody();
             // la entrada al parqueo se hizo por un cliente
-            reserve.setDef("Reserva");
+            reserve.setDef(Boolean.parseBoolean("Reserva"));
         }
         if(reserveDto.getCustomerId() != null) {
             // utilizar el microservicio de CustomerService
