@@ -136,7 +136,7 @@ public class VehiclesController {
         }
     }
 
-    @PostMapping("/save_both_1")
+    @PostMapping("/save_both")
     public ResponseEntity<String> saveVehiclesAndCustomerV2(@RequestBody VehiclesDtoSpecial vehiclesDtoSpecial) {
         try {
             vehiclesService.saveVehiclesAndCustomer(vehiclesDtoSpecial);
