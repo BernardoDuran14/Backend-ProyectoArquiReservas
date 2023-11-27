@@ -2,7 +2,6 @@ package com.example.reservas.service.impl;
 
 import com.example.reservas.dto.*;
 import com.example.reservas.entity.*;
-import com.example.reservas.producer.NotificationProducer;
 import com.example.reservas.repository.*;
 import com.example.reservas.service.inter.CustomerService;
 import com.example.reservas.service.inter.KeycloakService;
@@ -37,9 +36,6 @@ public class ReserveImpl implements ReserveService {
     @Autowired
     private KeycloakService keycloakService;
 
-    @Autowired
-    private NotificationProducer notificationProducer;
-
     @Value("${token.resource-id}")
     private String keycloakClient;
 
@@ -49,14 +45,19 @@ public class ReserveImpl implements ReserveService {
     @Override
     public List<EspaciosDisponiblesDto> getAllReservesAvailables(InitReservaDto initReservaDto) {
          Date fechaInicio = new Date();
-
+         Date fechaFin = new Date();
+         // utilizar la clase DateUtil para convertir la fecha, de String a Date
          fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, initReservaDto.getFechaInicio());
+//         fechaFin = DateUtil.toDate(DateUtil.FORMAT_DATE, initReservaDto.getFechaFin());
          log.info("fechaInicio: " + fechaInicio);
+         log.info("fechaFin: " + fechaFin);
          int horaInicio = Integer.parseInt(initReservaDto.getHoraInicio());
-
+//         int horaFin = Integer.parseInt(initReservaDto.getHoraFin());
             // obtener la lista de espacios disponibles por piso y fecha
-         List<Space> spaces = reserveRepository.listaEspaciosNoDisponiblesPorPisoYFecha
-                (initReservaDto.getName(), fechaInicio, horaInicio);
+         List<Space> spaces = reserveRepository.listaEspaciosNoDisponiblesPorPisoYFecha2
+                (initReservaDto.getName(), horaInicio);
+         log.info("spaces tamaño: " + spaces.size());
+         log.info("spaces: " + spaces);
          // mapear la lista de espacios disponibles a una lista de dto
          List<EspaciosDisponiblesDto> espaciosDisponiblesLista = mapearEspaciosDisponibles(spaces, initReservaDto.getName());
          return espaciosDisponiblesLista;
@@ -132,7 +133,9 @@ public class ReserveImpl implements ReserveService {
     @Override
     public void saveReserve(ReserveDto reserveDto) {
         Reserve reserve = new Reserve();
+        log.info("Placa:" + reserveDto.getVehiclePlate());
         Vehicles vehicle = vehiclesRepository.findByPlate(reserveDto.getVehiclePlate());
+        log.info("vehicle: " + vehicle);
         Customer customer = new Customer();
         Employee employee = new Employee();
         Space space = new Space();
@@ -146,11 +149,11 @@ public class ReserveImpl implements ReserveService {
             // utilizar el microservicio de EmployeeService
             employee = customerService.getEmployeeById(token, reserveDto.getEmployeeId()).getBody();
             // la entrada al parqueo se hizo por un empleado
-            reserve.setDef("Normal");
+            reserve.setDef(true);
         }else {
             employee = customerService.getEmployeeById(token,1L).getBody();
             // la entrada al parqueo se hizo por un cliente
-            reserve.setDef("Reserva");
+            reserve.setDef(false);
         }
         if(reserveDto.getCustomerId() != null) {
             // utilizar el microservicio de CustomerService
@@ -162,11 +165,7 @@ public class ReserveImpl implements ReserveService {
         // utilizar la clase DateUtil para convertir la fecha, de String a Date
         fechaInicio = DateUtil.toDate(DateUtil.FORMAT_DATE, reserveDto.getStartDate());
 
-        // hacer los set de los atributos de la reserva
-        reserve.setCustomer(customer);
-        reserve.setVehicles(vehicle);
-        reserve.setSpace(space);
-        reserve.setStartTime(Integer.parseInt(reserveDto.getStartTime()));
+//        BeanUtils.copyProperties(reserveDto, reserve);
         reserve.setStartDate(fechaInicio);
 
         reserve.setEmployee(employee);
@@ -189,8 +188,6 @@ public class ReserveImpl implements ReserveService {
 
     @Override
     public String sendNotification(String message) {
-        NotificationDto notificationDto = new NotificationDto(message,"REST",new Date());
-
-        return notificationProducer.sendNotification(notificationDto,"parking-notification");
+        return null;
     }
 }

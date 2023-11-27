@@ -18,8 +18,8 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
     @Query("SELECT s FROM Reserve r, Space s " + // hacer los joins
             "WHERE r.deleted = false and r.space.id= s.id " +
             "and r.status = false and r.space.floor.name = :name " +
-            "and r.startDate = :fechaInicio " +
-            "and r.startTime = :horaInicio ")
+            "and r.startDate >= :fechaInicio " +
+            "and r.startTime >= :horaInicio ")
     public List<Space> listaEspaciosNoDisponiblesPorPisoYFecha(@PathVariable String name, @PathVariable Date fechaInicio,
                                                                @PathVariable int horaInicio);
     /* convertir el anterior query a uno que pueda utilizar en consola de postgres
@@ -30,6 +30,12 @@ public interface ReserveRepository extends JpaRepository<Reserve, Long> {
     and r.start_date = '2021-06-01'
     and r.start_time = 8;
      */
+
+    @Query("SELECT s FROM Reserve r, Space s " + // hacer los joins
+            "WHERE r.deleted = false and r.space.id= s.id " +
+            "and r.status = false and r.space.floor.name = :name " +
+            "and r.startTime >= :horaInicio ")
+    public List<Space> listaEspaciosNoDisponiblesPorPisoYFecha2(@PathVariable String name, @PathVariable int horaInicio);
 
 //    @Query("SELECT s FROM Reserve r, Space s " + // hacer los joins
 //            "WHERE r.deleted = false and r.space.id= s.id " +

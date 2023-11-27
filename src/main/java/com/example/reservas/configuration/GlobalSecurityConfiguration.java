@@ -31,6 +31,7 @@ public class GlobalSecurityConfiguration
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests( authorizeHttpRequests -> {
             authorizeHttpRequests
+                    .requestMatchers("/api/v1/floors/all").hasAnyRole("ADMIN", "USER", "EMPLOYEE")
                     .requestMatchers("/api/v1/vehicles/all").hasAnyRole("ADMIN", "USER")
                     .requestMatchers("/api/v1/vehicles/{id}").hasAnyRole("ADMIN", "USER")
                     .requestMatchers("/api/v1/vehicles/save").hasAnyRole("ADMIN", "USER")

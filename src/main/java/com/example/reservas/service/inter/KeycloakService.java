@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.Map;
 
 @Service
-@FeignClient(name = "keycloak", url = "http://localhost:8080/realms/parking/")
+@FeignClient(name = "keycloak", url = "http://192.168.12.176:8080/realms/parking/")
 public interface KeycloakService {
 
     @PostMapping(value = "/protocol/openid-connect/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)

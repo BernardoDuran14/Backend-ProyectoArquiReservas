@@ -37,7 +37,7 @@ public class Reserve implements Serializable {
     private Vehicles vehicles;
 
     @Column(name = "p_reserve_def")
-    private String def;
+    private boolean def;
 
     @Column(name = "p_reserve_status")
     private Boolean status;

@@ -90,14 +90,14 @@ public class ReserveController {
         }
     }
 
-    @GetMapping("/test_notification")
-    public ResponseEntity<String> testNotification() {
-        try {
-            String notification = reserveService.sendNotification("Test de notificación");
-            return ResponseEntity.ok(reserveService.sendNotification(notification));
-        } catch (Exception e) {
-            log.error("Error al enviar la notificación", e);
-            return ResponseEntity.badRequest().body("Error al enviar la notificación");
-        }
-    }
+//    @GetMapping("/test_notification")
+//    public ResponseEntity<String> testNotification() {
+//        try {
+//            String notification = reserveService.sendNotification("Test de notificación");
+//            return ResponseEntity.ok(reserveService.sendNotification(notification));
+//        } catch (Exception e) {
+//            log.error("Error al enviar la notificación", e);
+//            return ResponseEntity.badRequest().body("Error al enviar la notificación");
+//        }
+//    }
 }
